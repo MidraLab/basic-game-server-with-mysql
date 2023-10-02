@@ -27,8 +27,8 @@ func main() {
 
 	r.Use(middleware.AuthenticateMiddleware()).WithGroup("", func(group *bunrouter.Group) {
 		group.POST("/user/get", userHandler.UserGetHandle())
-		group.POST("/move", userHandler.MoveHandle())
-		group.POST("/destroy", userHandler.DestroyHandle())
+		group.POST("/user/score", userHandler.ScoreUpdateHandle())
+		group.POST("/user/destroy", userHandler.DestroyHandle())
 		group.GET("/users/get", userHandler.UserRankingGetHandle())
 	})
 
