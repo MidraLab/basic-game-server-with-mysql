@@ -1,13 +1,13 @@
-## basic-game-server-with-mysql
+# basic-game-server-with-mysql
 ワンコマンドで基本的な機能の揃ったゲームサーバーを起動できるプロジェクトである。
 
-### Setup
+## Setup
 
-### How to Use
+## How to Use
 
-### Supported Platforms
+## Supported Platforms
 
-### Dependencies
+## Dependencies
 
-### Licence
+## Licence
 [MIT License](https://github.com/MidraLab/basic-game-server-with-mysql/blob/main/LICENSE)
