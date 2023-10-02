@@ -87,10 +87,10 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// MoveHandle プレイヤー移動同期
-func (u *UserHandler) MoveHandle() bunrouter.HandlerFunc {
+// ScoreUpdateHandle プレイヤー移動同期
+func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
-		w.Write([]byte("MoveHandle triggered"))
+		w.Write([]byte("ScoreUpdateHandle triggered"))
 		return nil
 	}
 }
