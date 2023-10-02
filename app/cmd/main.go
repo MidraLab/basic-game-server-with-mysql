@@ -24,10 +24,13 @@ func main() {
 	r.Use(middleware.CorsMiddleware())
 
 	r.POST("/user/create", userHandler.UserCreateHandle())
-	r.POST("/user/get", userHandler.UserGetHandle())
-	r.POST("/move", userHandler.MoveHandle())
-	r.POST("/destroy", userHandler.DestroyHandle())
-	r.GET("/users/get", userHandler.UserRankingGetHandle())
+
+	r.Use(middleware.AuthenticateMiddleware()).WithGroup("", func(group *bunrouter.Group) {
+		group.POST("/user/get", userHandler.UserGetHandle())
+		group.POST("/user/score", userHandler.ScoreUpdateHandle())
+		group.POST("/user/destroy", userHandler.DestroyHandle())
+		group.GET("/users/get", userHandler.UserRankingGetHandle())
+	})
 
 	log.Println("listening on http://localhost:8080")
 	log.Println(http.ListenAndServe(":8080", r))

@@ -2,6 +2,7 @@ package _interface
 
 import (
 	"encoding/json"
+	"example.com/application/auth"
 	"example.com/application/service"
 	"example.com/interface/request"
 	"example.com/interface/response"
@@ -49,18 +50,13 @@ func (u *UserHandler) UserCreateHandle() bunrouter.HandlerFunc {
 // UserGetHandle retrieves user information based on auth_token
 func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
-		var requestData request.UserGetRequest
-
-		// Decode the request body to get auth_token
-		if err := json.NewDecoder(req.Body).Decode(&requestData); err != nil {
-			http.Error(w, "Failed to parse request", http.StatusBadRequest)
-			return err
-		}
 
 		ctx := req.Context()
 
+		id := auth.GetUserIDFromContext(ctx)
+
 		// Retrieve user by auth token
-		user, err := u.userService.GetUserByAuthToken(ctx, requestData.Token)
+		user, err := u.userService.GetUserByUserId(ctx, id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return err
@@ -87,10 +83,10 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// MoveHandle プレイヤー移動同期
-func (u *UserHandler) MoveHandle() bunrouter.HandlerFunc {
+// ScoreUpdateHandle プレイヤー移動同期
+func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
-		w.Write([]byte("MoveHandle triggered"))
+		w.Write([]byte("ScoreUpdateHandle triggered"))
 		return nil
 	}
 }
