@@ -35,6 +35,11 @@ func (u *UserService) Add(ctx context.Context, name string) (string, error) {
 	return authToken.String(), nil
 }
 
+func (u *UserService) UpdateUser(ctx context.Context, user *domain.User) error {
+	_ = u.UserRepository.UpdateUser(ctx, user)
+	return nil
+}
+
 func (u *UserService) Delete(ctx context.Context, id string) (string, error) {
 	_ = u.UserRepository.DeleteUser(ctx, id)
 	return "", nil
