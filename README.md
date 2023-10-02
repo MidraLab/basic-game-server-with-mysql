@@ -10,4 +10,4 @@
 ### Dependencies
 
 ### Licence
-[MIT License](https://github.com/MidraLab/uni-master-liker/blob/main/LICENSE)
+[MIT License](https://github.com/MidraLab/basic-game-server-with-mysql/blob/main/LICENSE)
