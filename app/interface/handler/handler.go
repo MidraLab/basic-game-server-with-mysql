@@ -145,10 +145,21 @@ func (u *UserHandler) UserRankingGetHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// DestroyHandle プレイヤーゲームオーバー
+// DestroyHandle deletes a user
 func (u *UserHandler) DestroyHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
-		w.Write([]byte("DestroyHandle triggered"))
+		ctx := req.Context()
+		id := auth.GetUserIDFromContext(ctx)
+
+		// Delete the user using userService
+		if _, err := u.userService.Delete(ctx, id); err != nil {
+			http.Error(w, "Failed to delete user", http.StatusInternalServerError)
+			return err
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"message": "User successfully deleted"}`))
 		return nil
 	}
 }
