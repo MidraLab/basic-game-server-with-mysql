@@ -26,15 +26,23 @@ func (u *UserRepository) AddUser(ctx context.Context, id, authToken, name string
 }
 
 func (u *UserRepository) UpdateUser(ctx context.Context, user *domain.User) error {
-	return nil
+	_, err := u.Conn.NewUpdate().Model(user).Where("id = ?", user.Id).Exec(ctx)
+	return err
 }
 
 func (u *UserRepository) DeleteUser(ctx context.Context, id string) error {
-	return nil
+	user := &domain.User{Id: id}
+	_, err := u.Conn.NewDelete().Model(user).Where("id = ?", id).Exec(ctx)
+	return err
 }
 
 func (u *UserRepository) GetUserByUserId(ctx context.Context, id string) (*domain.User, error) {
-	return nil, nil
+	var user *domain.User
+	err := u.Conn.NewSelect().Model(&user).Where("id = ?", id).Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
 }
 
 func (u *UserRepository) GetUserByAuthToken(ctx context.Context, authToken string) (*domain.User, error) {
