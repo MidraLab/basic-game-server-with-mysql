@@ -25,6 +25,10 @@ func (u *UserRepository) AddUser(ctx context.Context, id, authToken, name string
 	return err
 }
 
+func (u *UserRepository) UpdateUser(ctx context.Context, user *domain.User) error {
+	return nil
+}
+
 func (u *UserRepository) DeleteUser(ctx context.Context, id string) error {
 	return nil
 }

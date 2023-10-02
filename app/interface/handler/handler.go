@@ -8,6 +8,7 @@ import (
 	"example.com/interface/response"
 	"github.com/uptrace/bunrouter"
 	"net/http"
+	"strconv"
 )
 
 type UserHandler struct {
@@ -87,6 +88,27 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 		w.Write([]byte("ScoreUpdateHandle triggered"))
+		var requestData request.UserScoreUpdateRequest
+		if err := json.NewDecoder(req.Body).Decode(&requestData); err != nil {
+			http.Error(w, "Failed to parse request", http.StatusBadRequest)
+			return err
+		}
+		ctx := req.Context()
+		id := auth.GetUserIDFromContext(ctx)
+
+		user, err := u.userService.GetUserByUserId(ctx, id)
+		if err != nil {
+			http.Error(w, "Failed to Score Update user", http.StatusInternalServerError)
+			return err
+		}
+
+		score, _ := strconv.Atoi(requestData.Score)
+
+		if user.HighScore < score {
+			user.HighScore = score
+			_ = u.userService.UpdateUser(ctx, user)
+		}
+
 		return nil
 	}
 }
