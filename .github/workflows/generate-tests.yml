@@ -45,4 +45,5 @@ jobs:
         run: |
           git add -A
           git commit -m "Generate missing tests [skip ci]"
-          git push
+          git push origin ${{ steps.branch-name.outputs.branch }}
+      
