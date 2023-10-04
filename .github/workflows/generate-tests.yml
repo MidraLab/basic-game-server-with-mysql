@@ -1,4 +1,4 @@
-name: Generate Tests
+name: Generate and Push Tests
 
 on:
   push:
@@ -22,3 +22,14 @@ jobs:
         run: |
           go get -u github.com/cweill/gotests/...
           find . -name "*.go" ! -path "./vendor/*" -exec gotests -all -w {} +
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Commit and push generated tests
+        run: |
+          git add -A
+          git commit -m "Generate missing tests [skip ci]"
+          git push
