@@ -41,13 +41,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-      - name: Get current branch name
-        id: branch-name
-        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+      - name: Get the current branch name
+        id: get-branch-name
+        run: echo "::set-output name=branch::$(echo ${GITHUB_HEAD_REF})"
 
       - name: Commit and push generated tests
         run: |
           git add -A
           git commit -m "Generate missing tests [skip ci]"
-          git push origin ${{ steps.branch-name.outputs.branch }}
-      
+          git push origin ${{ steps.get-branch-name.outputs.branch }}
