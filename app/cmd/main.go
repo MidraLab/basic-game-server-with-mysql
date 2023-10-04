@@ -1,3 +1,8 @@
+// @title			Game Server API
+// @version		1.0
+// @description	This project is a one-command, feature-complete game server starter.
+// @host			localhost:8080
+// @BasePath		/
 package main
 
 import (

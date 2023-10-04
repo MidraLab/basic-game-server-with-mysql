@@ -1,4 +1,4 @@
-.PHONY: format tidy all
+.PHONY: format tidy install-tools lint all
 
 format:
 	cd app && go fmt ./...
@@ -6,4 +6,13 @@ format:
 tidy:
 	cd app && go mod tidy
 
-all: format tidy
+test:
+	cd app && go test ./...
+
+install-tools:
+	go install some/tool@latest
+
+lint:
+	cd app && golangci-lint run
+
+all: format tidy test
