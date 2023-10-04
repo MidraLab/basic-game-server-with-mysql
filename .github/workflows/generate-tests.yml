@@ -1,0 +1,48 @@
+name: Generate and Push Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: Temporarily remove vendor and docs directories
+        run: |
+          mv app/vendor app/vendor_tmp
+          mv app/docs app/docs_tmp
+
+      - name: Generate test files
+        run: |
+          go get -u github.com/cweill/gotests/...
+          find . -name "*.go" -exec gotests -all -w {} +
+
+      - name: Restore vendor and docs directories
+        run: |
+          mv app/vendor_tmp app/vendor
+          mv app/docs_tmp app/docs
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Commit and push generated tests
+        run: |
+          git add -A
+          git commit -m "Generate missing tests [skip ci]"
+          git push
