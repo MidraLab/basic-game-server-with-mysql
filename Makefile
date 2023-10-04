@@ -7,7 +7,7 @@ tidy:
 	cd app && go mod tidy
 
 test:
-	cd app && go test ./...
+	cd app && go test -cover ./...
 
 install-tools:
 	go install some/tool@latest
