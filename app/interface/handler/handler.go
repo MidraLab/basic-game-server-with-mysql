@@ -19,6 +19,16 @@ func NewUserHandler(userService *service.UserService) *UserHandler {
 	return &UserHandler{userService: *userService}
 }
 
+// UserCreateHandle creates a new user.
+//
+//	@Summary		Create a new user
+//	@Description	Create a new user with the given name.
+//	@Tags			Users
+//	@Accept			json
+//	@Produce		json
+//	@Param			name	body		request.UserCreateRequest	true	"User info"
+//	@Success		200		{object}	response.UserCreateResponse
+//	@Router			/user/create [post]
 func (u *UserHandler) UserCreateHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 		var requestData request.UserCreateRequest
@@ -48,7 +58,16 @@ func (u *UserHandler) UserCreateHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// UserGetHandle retrieves user information based on auth_token
+// UserGetHandle retrieves the information of a user.
+//
+//	@Summary		Get user information
+//	@Description	Get the information of a user by their ID.
+//	@Tags			Users
+//	@Accept			json
+//	@Produce		json
+//	@Security		ApiKeyAuth
+//	@Success		200	{object}	response.UserGetResponse
+//	@Router			/user/get [post]
 func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 
@@ -84,7 +103,16 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// ScoreUpdateHandle プレイヤー移動同期
+// ScoreUpdateHandle updates the score of a user.
+//
+//	@Summary		Update user score
+//	@Description	Update the score of a user if the new score is higher than the current score.
+//	@Tags			Scores
+//	@Accept			json
+//	@Produce		json
+//	@Security		ApiKeyAuth
+//	@Success		200	{string}	string	"ScoreUpdateHandle triggered"
+//	@Router			/user/score [post]
 func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 		w.Write([]byte("ScoreUpdateHandle triggered"))
@@ -113,6 +141,15 @@ func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 	}
 }
 
+// UserRankingGetHandle retrieves the rankings of all users.
+//
+//	@Summary		Get user rankings
+//	@Description	Get the rankings of all users based on their high scores.
+//	@Tags			Rankings
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	response.UserRankingResponse
+//	@Router			/users/get [get]
 func (u *UserHandler) UserRankingGetHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 		// UserServiceからランキングを取得
@@ -145,7 +182,16 @@ func (u *UserHandler) UserRankingGetHandle() bunrouter.HandlerFunc {
 	}
 }
 
-// DestroyHandle deletes a user
+// DestroyHandle deletes a user.
+//
+//	@Summary		Delete a user
+//	@Description	Delete a user by their ID.
+//	@Tags			Users
+//	@Accept			json
+//	@Produce		json
+//	@Security		ApiKeyAuth
+//	@Success		200	{object}	map[string]string
+//	@Router			/user/destroy [post]
 func (u *UserHandler) DestroyHandle() bunrouter.HandlerFunc {
 	return func(w http.ResponseWriter, req bunrouter.Request) error {
 		ctx := req.Context()
