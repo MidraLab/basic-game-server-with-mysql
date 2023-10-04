@@ -23,8 +23,8 @@ jobs:
 
       - name: Temporarily remove vendor and docs directories
         run: |
-          mv vendor vendor_tmp
-          mv docs docs_tmp
+          mv app/vendor app/vendor_tmp
+          mv app/docs app/docs_tmp
 
       - name: Generate test files
         run: |
@@ -33,8 +33,8 @@ jobs:
 
       - name: Restore vendor and docs directories
         run: |
-          mv vendor_tmp vendor
-          mv docs_tmp docs
+          mv app/vendor_tmp app/vendor
+          mv app/docs_tmp app/docs
 
       - name: Configure Git
         run: |
