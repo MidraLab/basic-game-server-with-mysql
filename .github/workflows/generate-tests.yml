@@ -24,7 +24,7 @@ jobs:
       - name: Generate test files
         run: |
           go get -u github.com/cweill/gotests/...
-          find . -name "*.go" ! -path "./vendor/*" -exec gotests -all -w {} +
+          find . -type d \( -path ./vendor -o -path ./docs \) -prune -o -name "*.go" -exec gotests -all -w {} +
 
       - name: Configure Git
         run: |
