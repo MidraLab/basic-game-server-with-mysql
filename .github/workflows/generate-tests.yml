@@ -41,6 +41,10 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
+      - name: Get current branch name
+        id: branch-name
+        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Commit and push generated tests
         run: |
           git add -A
