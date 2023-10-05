@@ -23,20 +23,11 @@ jobs:
         with:
           go-version: 1.17
 
-      - name: Temporarily remove vendor and docs directories
-        run: |
-          mv app/vendor app/vendor_tmp
-          mv app/docs app/docs_tmp
 
       - name: Generate test files
         run: |
           go get -u github.com/cweill/gotests/...
           find . -name "*.go" -exec gotests -all -w {} +
-
-      - name: Restore vendor and docs directories
-        run: |
-          mv app/vendor_tmp app/vendor
-          mv app/docs_tmp app/docs
 
       - name: Configure Git
         run: |
