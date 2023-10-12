@@ -4,6 +4,7 @@ import (
 	"context"
 	"example.com/domain"
 	"github.com/uptrace/bun"
+	"log"
 )
 
 type UserRepository struct {
@@ -25,8 +26,15 @@ func (u *UserRepository) AddUser(ctx context.Context, id, authToken, name string
 	return err
 }
 
-func (u *UserRepository) UpdateUser(ctx context.Context, user *domain.User) error {
-	_, err := u.Conn.NewUpdate().Model(user).Where("id = ?", user.Id).Exec(ctx)
+func (u *UserRepository) UpdateUser(ctx context.Context, user domain.User) error {
+	uuser := &domain.User{
+		Id:        user.Id,
+		AuthToken: user.AuthToken,
+		Name:      user.Name,
+		HighScore: user.HighScore,
+	}
+	_, err := u.Conn.NewUpdate().Model(uuser).Where("id = ?", uuser.Id).Exec(ctx)
+	log.Println(uuser.HighScore)
 	return err
 }
 
@@ -36,11 +44,11 @@ func (u *UserRepository) DeleteUser(ctx context.Context, id string) error {
 	return err
 }
 
-func (u *UserRepository) GetUserByUserId(ctx context.Context, id string) (*domain.User, error) {
-	var user *domain.User
+func (u *UserRepository) GetUserByUserId(ctx context.Context, id string) (domain.User, error) {
+	var user domain.User
 	err := u.Conn.NewSelect().Model(&user).Where("id = ?", id).Scan(ctx)
 	if err != nil {
-		return nil, err
+		return domain.User{}, err
 	}
 	return user, nil
 }
@@ -55,11 +63,14 @@ func (u *UserRepository) GetUserByAuthToken(ctx context.Context, authToken strin
 }
 
 func (u *UserRepository) GetUserRanking(ctx context.Context) ([]*domain.UserRanking, error) {
-	var users []domain.User
+	// Change var users []domain.User to var users []*domain.User
+	var users []*domain.User
+
+	log.Println("GetUserRanking")
 
 	err := u.Conn.NewSelect().
 		Column("name", "high_score").
-		Model(&users).
+		Model(&users).                // No change needed here as we're passing a pointer to a slice
 		OrderExpr("high_score DESC"). // ハイスコアで降順にソート
 		Scan(ctx)
 	if err != nil {

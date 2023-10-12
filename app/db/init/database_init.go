@@ -7,8 +7,10 @@ import (
 )
 
 type User struct {
-	Id   string `bun:"type:varchar(255),primary" json:"id"` // Note the change here from 'primary_key' to 'primary'
-	Name string `bun:"type:varchar(255)" json:"name"`
+	Id        string `bun:"type:varchar(128),primary" json:"id"`        // ユーザID
+	AuthToken string `bun:"type:varchar(128),unique" json:"auth_token"` // 認証トークン
+	Name      string `bun:"type:varchar(64)" json:"name"`               // ユーザ名
+	HighScore int    `bun:"type:int unsigned" json:"high_score"`        // ハイスコア
 }
 
 func CreateTable(db *bun.DB) {
