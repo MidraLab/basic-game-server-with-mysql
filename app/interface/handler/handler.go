@@ -7,6 +7,7 @@ import (
 	"example.com/interface/request"
 	"example.com/interface/response"
 	"github.com/uptrace/bunrouter"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -74,7 +75,6 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 		ctx := req.Context()
 
 		id := auth.GetUserIDFromContext(ctx)
-
 		// Retrieve user by auth token
 		user, err := u.userService.GetUserByUserId(ctx, id)
 		if err != nil {
@@ -111,6 +111,7 @@ func (u *UserHandler) UserGetHandle() bunrouter.HandlerFunc {
 //	@Accept			json
 //	@Produce		json
 //	@Security		ApiKeyAuth
+//	@Param			name	body		request.UserScoreUpdateRequest	true	"Update score"
 //	@Success		200	{string}	string	"ScoreUpdateHandle triggered"
 //	@Router			/user/score [post]
 func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
@@ -124,7 +125,11 @@ func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 		ctx := req.Context()
 		id := auth.GetUserIDFromContext(ctx)
 
+		log.Println("id", id)
+
 		user, err := u.userService.GetUserByUserId(ctx, id)
+
+		log.Println("user", user.Name)
 		if err != nil {
 			http.Error(w, "Failed to Score Update user", http.StatusInternalServerError)
 			return err
@@ -132,8 +137,12 @@ func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 
 		score, _ := strconv.Atoi(requestData.Score)
 
+		log.Println("score", score)
+		log.Println("user.HighScore", user.HighScore)
+
 		if user.HighScore < score {
 			user.HighScore = score
+			log.Println("user.HighScore", user.HighScore)
 			_ = u.userService.UpdateUser(ctx, user)
 		}
 
@@ -148,6 +157,7 @@ func (u *UserHandler) ScoreUpdateHandle() bunrouter.HandlerFunc {
 //	@Tags			Rankings
 //	@Accept			json
 //	@Produce		json
+//	@Security		ApiKeyAuth
 //	@Success		200	{array}	response.UserRankingResponse
 //	@Router			/users/get [get]
 func (u *UserHandler) UserRankingGetHandle() bunrouter.HandlerFunc {

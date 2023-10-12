@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `go_college_api`.`user` (
+CREATE TABLE IF NOT EXISTS `basic-game-server-with-mysql`.`user` (
     `id` VARCHAR(128) NOT NULL COMMENT 'ユーザID',
     `auth_token` VARCHAR(128) NOT NULL COMMENT '認証トークン',
     `name` VARCHAR(64) NOT NULL COMMENT 'ユーザ名',

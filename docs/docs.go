@@ -126,6 +126,17 @@ const docTemplate = `{
                     "Scores"
                 ],
                 "summary": "Update user score",
+                "parameters": [
+                    {
+                        "description": "Update score",
+                        "name": "name",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserScoreUpdateRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "ScoreUpdateHandle triggered",
@@ -138,6 +149,11 @@ const docTemplate = `{
         },
         "/users/get": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "description": "Get the rankings of all users based on their high scores.",
                 "consumes": [
                     "application/json"
@@ -168,6 +184,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserScoreUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "score": {
                     "type": "string"
                 }
             }
@@ -204,6 +228,13 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "x-token",
+            "in": "header"
         }
     }
 }`

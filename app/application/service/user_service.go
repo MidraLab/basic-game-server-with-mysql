@@ -5,6 +5,7 @@ import (
 	"example.com/domain"
 	"example.com/domain/repository"
 	"github.com/google/uuid"
+	"log"
 )
 
 type UserService struct {
@@ -35,7 +36,7 @@ func (u *UserService) Add(ctx context.Context, name string) (string, error) {
 	return authToken.String(), nil
 }
 
-func (u *UserService) UpdateUser(ctx context.Context, user *domain.User) error {
+func (u *UserService) UpdateUser(ctx context.Context, user domain.User) error {
 	_ = u.UserRepository.UpdateUser(ctx, user)
 	return nil
 }
@@ -45,8 +46,8 @@ func (u *UserService) Delete(ctx context.Context, id string) (string, error) {
 	return "", nil
 }
 
-func (u *UserService) GetUserByUserId(ctx context.Context, id string) (*domain.User, error) {
-	var user *domain.User
+func (u *UserService) GetUserByUserId(ctx context.Context, id string) (domain.User, error) {
+	var user domain.User
 	user, _ = u.UserRepository.GetUserByUserId(ctx, id)
 	return user, nil
 }
@@ -58,6 +59,7 @@ func (u *UserService) GetUserByAuthToken(ctx context.Context, authToken string) 
 }
 
 func (u *UserService) GetUserRanking(ctx context.Context) ([]*domain.UserRanking, error) {
+	log.Println("GetUserRankingService")
 	userRankings, err := u.UserRepository.GetUserRanking(ctx)
 	if err != nil {
 		return nil, err

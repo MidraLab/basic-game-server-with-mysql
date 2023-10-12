@@ -1,8 +1,11 @@
-// @title			Game Server API
-// @version		1.0
-// @description	This project is a one-command, feature-complete game server starter.
-// @host			localhost:8080
-// @BasePath		/
+// @title           Game Server API
+// @version         1.0
+// @description     This project is a one-command, feature-complete game server starter.
+// @host            localhost:8080
+// @BasePath        /
+// @securityDefinitions.apiKey ApiKeyAuth
+// @in header
+// @name x-token
 package main
 
 import (
@@ -18,6 +21,7 @@ import (
 
 func main() {
 	db, _ := config.NewDBConnection()
+	//db_init.CreateTable(db)
 
 	userRepository := infrastructure.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)

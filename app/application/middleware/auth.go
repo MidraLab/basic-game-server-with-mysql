@@ -30,6 +30,9 @@ func (m *Middleware) AuthenticateMiddleware() func(bunrouter.HandlerFunc) bunrou
 			}
 
 			user, err := m.UserService.GetUserByAuthToken(ctx, token)
+
+			log.Print("AuthenticateMiddleware" + token)
+
 			if err != nil {
 				return err
 			}
