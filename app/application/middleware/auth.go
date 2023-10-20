@@ -11,10 +11,10 @@ import (
 )
 
 type Middleware struct {
-	UserService *service.UserService
+	UserService service.UserServiceInterface
 }
 
-func NewMiddleware(userService *service.UserService) *Middleware {
+func NewMiddleware(userService service.UserServiceInterface) *Middleware {
 	return &Middleware{
 		UserService: userService,
 	}
