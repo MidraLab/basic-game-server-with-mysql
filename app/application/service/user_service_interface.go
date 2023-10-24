@@ -5,6 +5,7 @@ import (
 	"example.com/domain"
 )
 
+//go:generate mockgen -source=user_service_interface.go -destination=../../mocks/user_service_mock.go -package=mocks
 type UserServiceInterface interface {
 	Add(ctx context.Context, name string) (string, error)
 	UpdateUser(ctx context.Context, user domain.User) error

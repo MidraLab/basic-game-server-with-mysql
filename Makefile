@@ -9,10 +9,7 @@ tidy:
 test:
 	cd app && go test ./...
 
-install-tools:
-	go install some/tool@latest
-
-lint:
-	cd app && golangci-lint run
+gomock:
+	cd app && go generate ./...
 
 all: format tidy test
