@@ -1,0 +1,24 @@
+name: Generate mocks
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+               go install go.uber.org/mock/mockgen@latest
+      - name: Generate mocks
+        run: |
+          
+          for dir in "/app/application/middlewares" "/app/application/services" "/app/interface/handlers"; do
+          
+            for file in $(find $dir -name '*.go' ! -name '*_interface.go'); do
+              mockgen -source=$file -destination=mocks/
+            done
+          
+          done
