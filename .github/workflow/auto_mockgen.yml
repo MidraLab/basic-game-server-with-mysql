@@ -1,6 +1,5 @@
 name: Generate mocks
-on:
-  workflow_dispatch:
+on: [push]
 
 jobs:
   build:
