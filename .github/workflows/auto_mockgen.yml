@@ -30,9 +30,7 @@ jobs:
 
       - name: Install gotests
         run: |
-          cd app
-          go get -u github.com/cweill/gotests/...
-
+          go install github.com/cweill/gotests/gotests@latest
       - name: Generate mocks
         run: |
           cd app
