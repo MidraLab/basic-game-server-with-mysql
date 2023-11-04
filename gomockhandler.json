@@ -1,0 +1,44 @@
+{
+	"mocks": {
+		"app/application/middleware/mock_middleware/mock_auth_interface.go": {
+			"checksum": "K3mIu7OMX7MwxnCjmiNj3w==",
+			"source_checksum": "Biu21js4aqYMt9D++o7xYg==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "app/application/middleware/auth_interface.go",
+				"destination": "app/application/middleware/mock_middleware/mock_auth_interface.go",
+				"package": "mock_middleware"
+			}
+		},
+		"app/application/service/mock_service/mock_user_service_interface.go": {
+			"checksum": "/THJPtz1/AjoFUmW8wrEBw==",
+			"source_checksum": "lmESALEeIbdXj7kzuANZhg==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "app/application/service/user_service_interface.go",
+				"destination": "app/application/service/mock_service/mock_user_service_interface.go",
+				"package": "mock_service"
+			}
+		},
+		"app/domain/repository/mock_repository/mock_user.go": {
+			"checksum": "gtyb9qgT5CJmzU02yszMcQ==",
+			"source_checksum": "TK9DZtubihm8bygk0eE3PA==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "app/domain/repository/user.go",
+				"destination": "app/domain/repository/mock_repository/mock_user.go",
+				"package": "mock_repository"
+			}
+		},
+		"app/interface/handler/mock__interface/mock_handler_interface.go": {
+			"checksum": "W707zjcJELN+P5lPMTkq3w==",
+			"source_checksum": "eAVARHyK054If9xuw+XKPA==",
+			"mode": "SOURCE_MODE",
+			"source_mode_runner": {
+				"source": "app/interface/handler/handler_interface.go",
+				"destination": "app/interface/handler/mock__interface/mock_handler_interface.go",
+				"package": "mock__interface"
+			}
+		}
+	}
+}
