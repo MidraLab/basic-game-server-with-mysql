@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+//go:generate gotests -w -all $GOFILE
 type UserRepository struct {
 	Conn *bun.DB
 }
