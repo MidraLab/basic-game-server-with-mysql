@@ -8,6 +8,7 @@ require (
 	github.com/uptrace/bun v1.1.16
 	github.com/uptrace/bun/dialect/mysqldialect v1.1.16
 	github.com/uptrace/bunrouter v1.0.20
+	go.uber.org/mock v0.3.0
 )
 
 require (
