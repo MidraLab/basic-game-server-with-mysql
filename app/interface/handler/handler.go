@@ -12,6 +12,7 @@ import (
 	"strconv"
 )
 
+//go:generate gotests -w -all $GOFILE
 type UserHandler struct {
 	userService service.UserServiceInterface
 }

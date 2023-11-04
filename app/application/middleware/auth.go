@@ -10,6 +10,7 @@ import (
 	"net/http"
 )
 
+//go:generate gotests -w -all $GOFILE
 type Middleware struct {
 	UserService service.UserServiceInterface
 }

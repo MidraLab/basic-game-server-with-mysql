@@ -8,6 +8,7 @@ import (
 	"log"
 )
 
+//go:generate gotests -w -all $GOFILE
 type UserService struct {
 	UserRepository repository.UserRepository
 }

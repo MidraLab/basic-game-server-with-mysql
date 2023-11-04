@@ -28,10 +28,19 @@ jobs:
           go install go.uber.org/mock/mockgen@latest
           go install github.com/sanposhiho/gomockhandler@latest
 
+      - name: Install gotests
+        run: |
+          go install github.com/cweill/gotests/gotests@latest
       - name: Generate mocks
         run: |
           cd app
           go generate ./...
+
+      - name: Go lint
+        run: |
+          cd app
+          go fmt ./...
+          go mod tidy
 
       - name: Configure Git
         run: |

@@ -4,11 +4,11 @@ go 1.21.1
 
 require (
 	github.com/go-sql-driver/mysql v1.7.1
-	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.1
 	github.com/uptrace/bun v1.1.16
 	github.com/uptrace/bun/dialect/mysqldialect v1.1.16
 	github.com/uptrace/bunrouter v1.0.20
+	go.uber.org/mock v0.3.0
 )
 
 require (
