@@ -1,0 +1,45 @@
+name: Generate Mocks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21.1
+
+      - name: Install mockgen
+        run: go install go.uber.org/mock/mockgen@latest
+
+      - name: Generate mocks
+        run: |
+          cd app
+          go generate ./...
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Get the current branch name
+        id: get-branch-name
+        run: echo "::set-output name=branch::$(echo ${GITHUB_HEAD_REF})"
+
+      - name: Commit and push generated tests
+        run: |
+          git add -A
+          git commit -m "Generate missing mocks [skip ci]"
+          git push origin ${{ steps.get-branch-name.outputs.branch }}
