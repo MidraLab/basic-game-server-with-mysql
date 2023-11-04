@@ -38,6 +38,7 @@ jobs:
 
       - name: Go lint
         run: |
+          cd app
           go fmt ./...
           go mod tidy
 
