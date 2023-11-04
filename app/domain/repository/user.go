@@ -5,7 +5,7 @@ import (
 	"example.com/domain"
 )
 
-//go:generate mockgen -source=user.go -destination=../../mocks/user_mock.go -package=mocks
+//go:generate gomockhandler -config=$EXAMPLE_TESTS_ROOT/gomockhandler.json -source=$GOFILE -destination=mock_$GOPACKAGE/mock_$GOFILE -package=mock_$GOPACKAGE
 type UserRepository interface {
 	AddUser(ctx context.Context, id, authToken, name string) error
 	UpdateUser(ctx context.Context, user domain.User) error
